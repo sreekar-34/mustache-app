@@ -7,6 +7,8 @@ function setup(){
     video= createCapture(VIDEO);
     video.size(300,300);
     video.hide();
+    poseNet = ml5.poseNet(video, modelLoaded);
+    poseNet.on('pose', gotPoses);
 }
 
 function draw(){
@@ -15,4 +17,16 @@ function draw(){
 
 function take_snapshot(){
     save("my_picture.png");
+}
+
+function modelLoaded(){
+    console.log("modelLoaded!");
+}
+
+function gotPoses(results){
+    if(results.length>0){
+        console.log(results);
+        console.log('nose x:'+results[0].pose.nose.x);
+        console.log('nose y:'+results[0].pose.nose.y);
+    }
 }
